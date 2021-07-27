@@ -1,0 +1,64 @@
+package com.james.delivery.di
+
+import android.content.Context
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.james.delivery.BuildConfig
+import com.james.delivery.data.service.DeliveryApi
+import com.james.delivery.util.NetworkConnectionInterceptor
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+class NetworkModule {
+    @Provides
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
+        OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) {
+                interceptors().add(httpLoggingInterceptor)
+            }
+            interceptors().add(NetworkConnectionInterceptor(context))
+        }.build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder().apply {
+            baseUrl("https://mock-api-mobile.dev.lalamove.com/v2/")
+            addConverterFactory(GsonConverterFactory.create(gson))
+            client(okHttpClient)
+        }.build()
+
+    @Provides
+    @Singleton
+    fun provideDeliveryApi(retrofit: Retrofit): DeliveryApi =
+        retrofit.create(DeliveryApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson =
+        GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+            .serializeNulls()
+            .setLenient()
+            .create()
+}

@@ -1,6 +1,7 @@
 package com.james.delivery.ui.deliveries
 
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
 import com.james.delivery.R
 import com.james.delivery.base.BaseFragment
 import com.james.delivery.data.model.Delivery
@@ -8,7 +9,9 @@ import com.james.delivery.databinding.FragmentDeliveryBinding
 import com.james.delivery.databinding.ItemDeliveryBinding
 import com.james.delivery.ui.adapter.DeliveryAdapter
 import com.james.delivery.util.PagingLoadStateAdapter
+import com.james.delivery.util.SpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,6 +36,7 @@ class DeliveryFragment: BaseFragment<FragmentDeliveryBinding, DeliveryViewModel>
                         startPostponedEnterTransition()
                         true
                     }
+                    addItemDecoration(SpaceItemDecoration(10))
                 }
 
                 rvDelivery.adapter = withLoadStateHeaderAndFooter(
@@ -44,7 +48,14 @@ class DeliveryFragment: BaseFragment<FragmentDeliveryBinding, DeliveryViewModel>
                 deliveryClickListener = this@DeliveryFragment
 
                 with(viewModel) {
-                    // need to collect data here
+                    launchOnLifecycleScope {
+                        deliveryFlow.collectLatest { submitData(it) }
+                    }
+                    launchOnLifecycleScope {
+                        loadStateFlow.collectLatest {
+                            swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+                        }
+                    }
                 }
             }
         }
