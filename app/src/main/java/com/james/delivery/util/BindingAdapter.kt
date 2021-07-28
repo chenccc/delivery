@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.james.delivery.R
 import com.james.delivery.data.model.Delivery
 
 @BindingAdapter("imageUrl")
@@ -25,18 +26,20 @@ fun TextView.setToText(string: String?) {
 }
 
 @BindingAdapter("setPrice")
-fun TextView.setPrice(delivery: Delivery) {
-    val prefix = delivery.deliveryFee.first()
-    val deliveryFee = delivery.deliveryFee.run {
-        substring(1, length).toDoubleOrNull()
-    }
-    val surCharge = delivery.surcharge.run {
-        substring(1, length).toDoubleOrNull()
-    }
+fun TextView.setPrice(delivery: Delivery?) {
+    delivery?.let {
+        val prefix = it.deliveryFee.first()
+        val deliveryFee = it.deliveryFee.run {
+            substring(1, length).toDoubleOrNull()
+        }
+        val surCharge = it.surcharge.run {
+            substring(1, length).toDoubleOrNull()
+        }
 
-    deliveryFee?.let {
-        surCharge?.let {
-            text = String.format("$prefix%.2f", deliveryFee + surCharge)
+        deliveryFee?.let {
+            surCharge?.let {
+                text = String.format("$prefix%.2f", deliveryFee + surCharge)
+            }
         }
     }
 }

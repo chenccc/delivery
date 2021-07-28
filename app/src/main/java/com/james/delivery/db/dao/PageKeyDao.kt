@@ -14,6 +14,9 @@ interface PageKeyDao {
     @Query("SELECT * FROM pageKey WHERE id LIKE :id")
     fun getNextPageKey(id: String): PageKey?
 
+    @Query("SELECT * FROM pageKey")
+    fun getAllKeys(): List<PageKey>
+
     @Query("DELETE FROM pageKey")
     suspend fun clearAll()
 }

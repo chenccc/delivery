@@ -1,6 +1,7 @@
 package com.james.delivery.data.paging
 
 import android.net.Uri
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -17,6 +18,7 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
 
     companion object {
         const val PAGE_SIZE = 10
+        val TAG = DeliveryRemoteMediator::class.simpleName
     }
 
     private val deliveryDao = db.deliveryDao()
@@ -32,14 +34,14 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
                 LoadType.PREPEND ->
                     return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val lastItem = state.lastItemOrNull()
-                    val remoteKey: PageKey? = db.withTransaction {
-                        if (lastItem?.id != null) {
-                            keyDao.getNextPageKey(lastItem.id)
-                        } else null
+                    Log.d(TAG, "come to append")
+                    // depend on db, instead of page state
+                    val remoteKey = db.withTransaction {
+                        keyDao.getAllKeys().lastOrNull()
                     }
 
                     if (remoteKey?.nextPage == null) {
+                        Log.d(TAG, "come to end of pagination, remoteKey.id is ${remoteKey?.id}, nextpage is ${remoteKey?.nextPage} ")
                         return MediatorResult.Success(
                             endOfPaginationReached = true
                         )
@@ -63,6 +65,10 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
                 }
                 deliveries?.let { deliveryDao.insertAll(it) }
 
+            }
+
+            if (deliveries.isNullOrEmpty()) {
+                Log.d(TAG, "Come to end of pagination")
             }
 
             MediatorResult.Success(

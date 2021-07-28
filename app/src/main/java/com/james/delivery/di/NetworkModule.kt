@@ -5,17 +5,21 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.james.delivery.BuildConfig
+import com.james.delivery.StubInterceptor
 import com.james.delivery.data.service.DeliveryApi
+import com.james.delivery.util.Constants
 import com.james.delivery.util.NetworkConnectionInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -26,17 +30,21 @@ class NetworkModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
+
     @Provides
     @Singleton
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        @Named(Constants.STUB_INTERCEPTOR_KEY)
+        stubInterceptor: Interceptor
     ): OkHttpClient =
         OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
-                interceptors().add(httpLoggingInterceptor)
+                addInterceptor(httpLoggingInterceptor)
             }
-            interceptors().add(NetworkConnectionInterceptor(context))
+            addInterceptor(NetworkConnectionInterceptor(context))
+            addInterceptor(stubInterceptor)
         }.build()
 
     @Provides
