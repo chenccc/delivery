@@ -36,7 +36,7 @@ class DeliveryFragment: BaseFragment<FragmentDeliveryBinding, DeliveryViewModel>
                         startPostponedEnterTransition()
                         true
                     }
-                    addItemDecoration(SpaceItemDecoration(10))
+                    addItemDecoration(SpaceItemDecoration(15))
                 }
 
                 rvDelivery.adapter = withLoadStateHeaderAndFooter(

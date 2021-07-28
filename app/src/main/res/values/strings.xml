@@ -3,4 +3,5 @@
     <string name="delivery_icon">delivery icon</string>
     <string name="favourite_icon">favourite icon</string>
     <string name="retry">Retry</string>
+    <string name="my_deliveries">My deliveries</string>
 </resources>

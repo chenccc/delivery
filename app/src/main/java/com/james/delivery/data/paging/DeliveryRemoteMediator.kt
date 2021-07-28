@@ -1,6 +1,5 @@
 package com.james.delivery.data.paging
 
-import android.net.Uri
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -52,7 +51,8 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
             }
 
             val page = loadKey ?: 1
-            val response = service.getAllDeliveries(1 + (page - 1) * PAGE_SIZE , page * PAGE_SIZE)
+            val response = service.getAllDeliveries(1 + (page - 1) * PAGE_SIZE ,
+                page * PAGE_SIZE)
             val deliveries = response.body()
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
