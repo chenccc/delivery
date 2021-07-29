@@ -40,7 +40,6 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
                     }
 
                     if (remoteKey?.nextPage == null) {
-                        Log.d(TAG, "come to end of pagination, remoteKey.id is ${remoteKey?.id}, nextpage is ${remoteKey?.nextPage} ")
                         return MediatorResult.Success(
                             endOfPaginationReached = true
                         )
@@ -65,10 +64,6 @@ class DeliveryRemoteMediator(private val service: DeliveryApi, private val db: A
                 }
                 deliveries?.let { deliveryDao.insertAll(it) }
 
-            }
-
-            if (deliveries.isNullOrEmpty()) {
-                Log.d(TAG, "Come to end of pagination")
             }
 
             MediatorResult.Success(

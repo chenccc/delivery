@@ -51,7 +51,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder().apply {
-            baseUrl("https://mock-api-mobile.dev.lalamove.com/v2/")
+            baseUrl(Constants.BASE_URL)
             addConverterFactory(GsonConverterFactory.create(gson))
             client(okHttpClient)
         }.build()
