@@ -17,4 +17,7 @@ interface DeliveryDao {
 
     @Query("DELETE FROM delivery")
     suspend fun clearAll()
+
+    @Query("SELECT * FROM delivery")
+    suspend fun getDeliveries(): List<Delivery>
 }
