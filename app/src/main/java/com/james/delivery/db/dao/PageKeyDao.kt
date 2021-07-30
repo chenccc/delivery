@@ -11,9 +11,6 @@ interface PageKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrReplace(pageKey: PageKey)
 
-    @Query("SELECT * FROM pageKey WHERE id LIKE :id")
-    fun getNextPageKey(id: String): PageKey?
-
     @Query("SELECT * FROM pageKey")
     fun getAllKeys(): List<PageKey>
 
