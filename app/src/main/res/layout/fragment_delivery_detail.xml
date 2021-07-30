@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="delivery"
+            type="com.james.delivery.data.model.Delivery" />
+
+        <variable
+            name="viewModel"
+            type="com.james.delivery.ui.deliveries.detail.DeliveryDetailViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/view_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/half_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delivery_details"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:onClick="@{() -> viewModel.backToList()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:srcCompat="@drawable/back" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <View
+            android:id="@+id/view_route"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/half_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline_0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_title" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <TextView
+            android:id="@+id/from_text"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/from"
+            app:layout_constraintStart_toStartOf="@+id/view_route"
+            app:layout_constraintTop_toTopOf="@+id/view_route" />
+
+        <TextView
+            android:id="@+id/to_text"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@string/to"
+            app:layout_constraintBottom_toBottomOf="@+id/view_route"
+            app:layout_constraintStart_toStartOf="@+id/from_text" />
+
+        <TextView
+            android:id="@+id/route_from"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/white"
+            android:text="@{delivery.route.start}"
+            app:layout_constraintEnd_toEndOf="@+id/view_route"
+            app:layout_constraintTop_toTopOf="@+id/from_text" />
+
+        <TextView
+            android:id="@+id/route_to"
+            android:textSize="20sp"
+            android:text="@{delivery.route.end}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/route_from"
+            app:layout_constraintTop_toTopOf="@+id/to_text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_0.6.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <View
+            android:id="@+id/view_goods"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/half_dark"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_0.6.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_route" />
+
+        <TextView
+            android:id="@+id/goods_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="@string/goods_to_deliver"
+            app:layout_constraintStart_toStartOf="@+id/from_text"
+            app:layout_constraintTop_toTopOf="@+id/view_goods" />
+
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            imageUrl="@{delivery.goodsPicture}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_0.6.5"
+            app:layout_constraintEnd_toEndOf="@+id/view_goods"
+            app:layout_constraintStart_toStartOf="@+id/view_goods"
+            app:layout_constraintTop_toBottomOf="@+id/goods_text"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_0.8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <View
+            android:id="@+id/view_fee"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/half_dark"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_0.8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_goods"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/fee_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delivery_fee"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_0.8"
+            app:layout_constraintStart_toStartOf="@+id/goods_text"
+            app:layout_constraintTop_toTopOf="@+id/view_fee" />
+
+        <TextView
+            android:id="@+id/fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            setPrice="@{delivery}"
+            app:layout_constraintEnd_toEndOf="@+id/route_to"
+            app:layout_constraintTop_toTopOf="@+id/fee_text" />
+
+        <Button
+            android:id="@+id/add_remove_fav_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.updateDeliveryFav(delivery.id, !viewModel.getFavStatus(delivery.id))}"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{viewModel.getFavStatus(delivery.id)? @string/remove_from_fav : @string/add_to_fav}"
+            android:backgroundTint="@color/half_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

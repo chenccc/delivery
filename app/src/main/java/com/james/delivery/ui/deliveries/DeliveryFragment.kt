@@ -1,6 +1,7 @@
 package com.james.delivery.ui.deliveries
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.james.delivery.R
 import com.james.delivery.base.BaseFragment
@@ -61,5 +62,8 @@ class DeliveryFragment: BaseFragment<FragmentDeliveryBinding, DeliveryViewModel>
         }
 
     override fun onDeliveryClicked(binding: ItemDeliveryBinding, delivery: Delivery) {
+        val action = DeliveryFragmentDirections.
+            actionDeliveryFragmentToDeliveryDetailFragment(delivery)
+        findNavController().navigate(action)
     }
 }

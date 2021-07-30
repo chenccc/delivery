@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/deliveryFragment"
         android:name="com.james.delivery.ui.deliveries.DeliveryFragment"
-        android:label="DeliveryFragment" />
+        android:label="DeliveryFragment" >
+        <action
+            android:id="@+id/action_deliveryFragment_to_deliveryDetailFragment"
+            app:destination="@id/deliveryDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryDetailFragment"
+        android:name="com.james.delivery.ui.deliveries.detail.DeliveryDetailFragment"
+        android:label="DeliveryDetailFragment" >
+        <argument
+            android:name="delivery"
+            app:argType="com.james.delivery.data.model.Delivery" />
+    </fragment>
 </navigation>

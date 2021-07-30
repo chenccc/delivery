@@ -39,7 +39,7 @@ class DeliveryAdapter @Inject constructor(private val preference: MyPreference) 
 
         fun bind(item: Delivery) = with(binding) {
             delivery = item
-            isFav = preference.getBoolean("character${item.id}")
+            isFav = preference.getBoolean(item.id)
         }
     }
 
