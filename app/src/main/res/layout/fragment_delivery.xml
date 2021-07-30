@@ -15,7 +15,7 @@
             android:gravity="center"
             android:text="@string/my_deliveries"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/big_text_size"
             app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
