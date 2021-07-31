@@ -8,13 +8,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FakeDeliveryRepositoryImpl: DeliveryRepository {
-    private val deliveryList = mutableListOf<Delivery>()
+    private val _deliveryList = mutableListOf<Delivery>()
+    val deliveryList: List<Delivery> = _deliveryList
     private val deliveryFactory = DeliveryFactory()
     override suspend fun getAllDeliveries(): Flow<PagingData<Delivery>> = flow {
-        for (i in 0..DeliveryRemoteMediator.PAGE_SIZE) {
-            deliveryList.add(deliveryFactory.createDelivery())
+        for (i in 1..DeliveryRemoteMediator.PAGE_SIZE) {
+            _deliveryList.add(deliveryFactory.createDelivery())
         }
 
-        emit(PagingData.from(deliveryList))
+        emit(PagingData.from(_deliveryList))
     }
 }

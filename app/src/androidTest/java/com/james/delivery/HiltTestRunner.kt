@@ -12,6 +12,6 @@ class HiltTestRunner: AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, HiltTestApplication::class.jvmName, context)
+        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
     }
 }
