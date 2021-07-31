@@ -1,5 +1,6 @@
 package com.james.delivery.db.dao
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 
 import androidx.room.Room
@@ -8,15 +9,21 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.james.delivery.DeliveryFactory
 import com.james.delivery.db.AppDB
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class DeliveryDaoTest {
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var database: AppDB
     private lateinit var dao: DeliveryDao
     private lateinit var deliveryFactory: DeliveryFactory
@@ -37,7 +44,7 @@ class DeliveryDaoTest {
     }
 
     @Test
-    fun insertAll() = runBlocking {
+    fun insertAll() = runBlockingTest {
         val deliveryList = listOf(
             deliveryFactory.createDelivery(),
             deliveryFactory.createDelivery(),
@@ -53,7 +60,7 @@ class DeliveryDaoTest {
     }
 
     @Test
-    fun clearAll() = runBlocking {
+    fun clearAll() = runBlockingTest {
         val deliveryList = listOf(
             deliveryFactory.createDelivery(),
             deliveryFactory.createDelivery(),
