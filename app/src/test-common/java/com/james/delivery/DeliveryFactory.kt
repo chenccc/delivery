@@ -20,6 +20,11 @@ class DeliveryFactory {
         page = 1
     )
 
+    fun getTestDelivery(): Delivery =
+        getDefaultDelivery().copy(
+            id = "1234567"
+        )
+
     fun createDelivery(): Delivery {
         val id = counter.incrementAndGet().toString()
 
