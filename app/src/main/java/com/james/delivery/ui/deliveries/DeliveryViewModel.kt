@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeliveryViewModel @Inject constructor(
-    private val deliveryRepository: DeliveryRepository,
-    private val preference: MyPreference
+    private val deliveryRepository: DeliveryRepository
 ): BaseViewModel() {
     private lateinit var _deliveryFlow: Flow<PagingData<Delivery>>
     val deliveryFlow: Flow<PagingData<Delivery>>
@@ -29,6 +28,4 @@ class DeliveryViewModel @Inject constructor(
     }, {
         _deliveryFlow = it
     })
-
-    fun getFavStatus(id: String):Boolean = preference.getBoolean(id)
 }
