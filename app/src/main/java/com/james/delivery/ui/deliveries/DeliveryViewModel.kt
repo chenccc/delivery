@@ -6,13 +6,15 @@ import androidx.paging.cachedIn
 import com.james.delivery.base.BaseViewModel
 import com.james.delivery.data.model.Delivery
 import com.james.delivery.data.repository.DeliveryRepository
+import com.james.delivery.util.MyPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class DeliveryViewModel @Inject constructor(
-    private val deliveryRepository: DeliveryRepository
+    private val deliveryRepository: DeliveryRepository,
+    private val preference: MyPreference
 ): BaseViewModel() {
     private lateinit var _deliveryFlow: Flow<PagingData<Delivery>>
     val deliveryFlow: Flow<PagingData<Delivery>>
@@ -27,4 +29,6 @@ class DeliveryViewModel @Inject constructor(
     }, {
         _deliveryFlow = it
     })
+
+    fun getFavStatus(id: String):Boolean = preference.getBoolean(id)
 }
