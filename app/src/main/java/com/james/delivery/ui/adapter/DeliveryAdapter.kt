@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.james.delivery.data.model.Delivery
 import com.james.delivery.databinding.ItemDeliveryBinding
 import com.james.delivery.ui.deliveries.DeliveryViewModel
+import com.james.delivery.util.MyPreference
 import javax.inject.Inject
 
-class DeliveryAdapter @Inject constructor() :
+class DeliveryAdapter @Inject constructor(
+    private val preference: MyPreference
+) :
     PagingDataAdapter<Delivery, DeliveryAdapter.DeliveryViewHolder>(DeliveryComparator){
     var deliveryClickListener: DeliveryClickListener? = null
-
-    var viewModel: DeliveryViewModel? = null
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
@@ -41,7 +42,7 @@ class DeliveryAdapter @Inject constructor() :
 
         fun bind(item: Delivery) = with(binding) {
             delivery = item
-            isFav = viewModel?.getFavStatus(item.id)
+            isFav = preference.getBoolean(item.id)
         }
     }
 

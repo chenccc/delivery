@@ -31,7 +31,6 @@ class DeliveryFragment: BaseFragment<FragmentDeliveryBinding, DeliveryViewModel>
     override fun bindVM(binding: FragmentDeliveryBinding, viewModel: DeliveryViewModel) =
         with(binding) {
             with(deliveryAdapter) {
-                deliveryAdapter.viewModel = viewModel
                 rvDelivery.apply {
                     postponeEnterTransition()
                     viewTreeObserver.addOnPreDrawListener {
